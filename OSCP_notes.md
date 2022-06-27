@@ -40,7 +40,7 @@
 	for user in $(cat usernames); do for pass in $(cat passwords); do smbclient -L $IP -U "$user%$pass"; done; done
 	for user in $(cat usernames); do for pass in $(cat passwords); do smbmap -H $IP -u "$user" -p "$pass"; done; done
 
-	# Basic authentication ( PG: Phobos )
+	# Basic authentication
 	[401 Unauthorized] curl http://$IP/svn/
 	[403 Forbidden   ] curl http://$IP/svn/     -u "admin:admin"
 	[200 OK          ] curl http://$IP/svn/dev/ -u "admin:admin"
