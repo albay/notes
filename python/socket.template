@@ -1,0 +1,15 @@
+import socket
+
+s = socket.socket (socket.AF_INET, socket.SOCK_STREAM)
+
+# Connecting to host on port ...
+s.connect(("HOST", PORT))
+
+# Sending packet
+s.send(payload)
+
+# Receiving packet
+res = s.recv(1024)
+
+# Close socket
+s.close()
