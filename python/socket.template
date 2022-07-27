@@ -1,6 +1,6 @@
-import socket
+from socket import socket, AF_INET, SOCK_STREAM
 
-s = socket.socket (socket.AF_INET, socket.SOCK_STREAM)
+s = socket(AF_INET, SOCK_STREAM)
 
 # Connecting to host on port ...
 s.connect(("HOST", PORT))
